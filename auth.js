@@ -13,8 +13,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
             credentials: {
-                email: {},
-                password: {},
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" }
             },
             authorize: async (credentials) => {
                 if (!credentials) {
@@ -27,27 +27,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const query = { email: credentials?.email };
                     const user = await userCollection.findOne(query);
 
-                    if (user) {
-                        const isMatch = bcrypt.compare(credentials?.password, user?.password);
-                        if (isMatch) {
-                            const token = process.env.JWT_SECRET;
-                            const resp = {
-                                success: true,
-                                message: "User logged in successfully",
-                                user: user,
-                                data: { token: token },
-                            };
-                            console.log("From credential", resp);
-                            return resp;
-                        } else {
-                            throw new Error("Check Your Password");
-                        }
+                    if (user && bcrypt.compare(credentials.password, user.password)) {
+                        return {
+                            name: user.fullName,
+                            email: user.email,
+                            image: user.profileImage || null
+                        };
                     } else {
-                        throw new Error("User Not Found");
+                        throw new Error("Invalid email or password");
                     }
                 } catch (err) {
                     console.error("Error during authorization:", err);
-                    throw new Error(err);
+                    throw new Error("Authorization failed");
                 }
             }
         }),
@@ -74,24 +65,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
         }),
     ],
-    callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token._id = user.user._id;
-                token.name = user.user.fullName;
-                token.email = user.user.email;
-                token.image = user.user.profileImage;
-                token.token = user.data.token;
-            }
-            return token;
-        },
-        async session({ session, token }) {
-            session.user._id = token._id;
-            session.user.name = token.name;
-            session.user.email = token.email;
-            session.user.image = token.image;
-            session.user.token = token.token;
-            return session;
-        },
-    },
+    // callbacks: {
+    //     async session({ session, token, user }) {
+    //         session.user = {
+    //             id: token.sub,
+    //             name: token.name,
+    //             email: token.email,
+    //             image: token.picture || null
+    //         };
+    //         return session;
+    //     },
+    //     async jwt({ token, user }) {
+    //         if (user) {
+    //             token.sub = user.id;
+    //             token.name = user.name;
+    //             token.email = user.email;
+    //             token.picture = user.image;
+    //         }
+    //         return token;
+    //     }
+    // }
 })

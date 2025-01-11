@@ -13,28 +13,15 @@ const LoginModal = ({ toggleModal }) => {
                 email: event.target.email.value,
                 password: event.target.password.value
             }
-            const { email } = formData;
 
             const response = await doCredentialsLogIn(formData);
+            console.log("Login Modal", response);
             if (response.error) {
                 setError(response.error.message);
             } else {
                 alert("User logged in successfully!")
+                window.location.reload();
             }
-
-            // const res = await fetch(`/api/v1/users/${email}`, {
-            //     method: 'GET',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // });
-            // console.log(res);
-            // if (res.ok) {
-            //     alert("User logged in successfully!")
-            // } else {
-            //     console.error("Error occurred!")
-            // }
-
         } catch (err) {
             console.error(err.message);
             setError(err.message);
