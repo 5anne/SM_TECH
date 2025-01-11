@@ -110,7 +110,7 @@ const UpdateProfile = () => {
                             <label className="label">
                                 <span className="label-text">Profile Image</span>
                             </label>
-                            <input type="file" name='profileImage' placeholder="Profile Image" className="input input-bordered py-2" />
+                            <input type="file" name='profileImage' placeholder="Profile Image" className="input input-bordered py-2" required/>
                         </div>
                         <div className="form-control">
                             <label className="label">
