@@ -23,7 +23,7 @@ const RegisterModal = ({ toggleModal }) => {
             });
             console.log(response);
             if (response.ok) {
-                alert("User registered successfully!")
+                alert("User registered successfully! Please, Log In!")
             } else {
                 console.error("Error occurred!")
             }

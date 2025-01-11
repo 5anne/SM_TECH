@@ -24,6 +24,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
     await connectDB();
     const session = await auth();
+    console.log("From Session",session);
     return (
         <html lang="en">
             <body

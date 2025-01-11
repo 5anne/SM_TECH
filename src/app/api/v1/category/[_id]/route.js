@@ -5,7 +5,6 @@ import { ObjectId } from "mongodb";
 export const GET = async (request) => {
     const { pathname } = new URL(request.url);
     const _id = pathname.split('/').pop();
-    console.log(_id);
 
     if (!_id) {
         return NextResponse.json({ success: false, message: "No ID provided" }, { status: 400 });

@@ -3,12 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import logo from "../images/logo.png";
-import { FaBars, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { RiShoppingCartFill } from "react-icons/ri";
 import LogOut from './ui/LogOut';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import userImg from "../images/user.jpg";
+import { MdDashboard } from 'react-icons/md';
 
 const Navbar = ({ session }) => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(true);
@@ -87,7 +88,7 @@ const Navbar = ({ session }) => {
                         <LoginModal toggleModal={() => setIsLoginModalOpen(false)} /> : <RegisterModal toggleModal={() => setIsLoginModalOpen(true)} />
                 }
             </div>
-            <Link href={`/profile/${email}`}><FaBars /></Link>
+            <Link href={`/profile/${email}`} className="tooltip tooltip-bottom text-3xl" data-tip="Dashboard"><MdDashboard /></Link>
             <div className='dropdown dropdown-end lg:hidden'>
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                     <svg

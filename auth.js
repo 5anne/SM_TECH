@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const user = await userCollection.findOne(query);
 
                     if (user) {
-                        const isMatch = await bcrypt.compare(credentials?.password, user?.password);
+                        const isMatch = bcrypt.compare(credentials?.password, user?.password);
                         if (isMatch) {
                             const token = process.env.JWT_SECRET;
                             const resp = {
@@ -37,6 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                                 user: user,
                                 data: { token: token },
                             };
+                            console.log("From credential", resp);
                             return resp;
                         } else {
                             throw new Error("Check Your Password");
@@ -79,6 +80,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token._id = user.user._id;
                 token.name = user.user.fullName;
                 token.email = user.user.email;
+                token.image = user.user.profileImage;
                 token.token = user.data.token;
             }
             return token;
@@ -87,6 +89,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             session.user._id = token._id;
             session.user.name = token.name;
             session.user.email = token.email;
+            session.user.image = token.image;
             session.user.token = token.token;
             return session;
         },
