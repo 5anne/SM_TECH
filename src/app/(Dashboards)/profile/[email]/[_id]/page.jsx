@@ -1,6 +1,11 @@
 "use client"
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import bcrypt from "bcryptjs";
+import axios from 'axios';
+
+// const image_hosting_key = process.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = 'https://api.imgbb.com/1/upload?key=515cbf2e7466e1421466864e5e87bbbe';
 
 const UpdateProfile = () => {
     const [userData, setUserData] = useState(null);
@@ -32,12 +37,42 @@ const UpdateProfile = () => {
             const formData = new FormData(e.currentTarget);
             const payload = {};
 
+            const profileImageFile = { image: e.currentTarget.profileImage.files[0] };
+
+            if (!profileImageFile) {
+                console.error('No file selected');
+                return;
+            }
+            console.log(profileImageFile);
+
+            const result = await axios.post(image_hosting_api, profileImageFile, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
             for (let [key, value] of formData.entries()) {
                 if (value) {
                     payload[key] = value;
+                    if (key === "profileImage") {
+                        payload[key] = result?.data.data.url;
+                    }
+                    else {
+                        payload.profileImage = result?.data.data.url;
+                    }
+                    if (key === "password") {
+                        const hassedPassword = await bcrypt.hash(payload[key], 5);
+                        payload[key] = hassedPassword;
+                    }
+                    if (key === "updatedAt") {
+                        payload[key] = new Date();
+                    }
+                    else {
+                        payload.updatedAt = new Date();
+                    }
                 }
             }
-
+            console.log(payload);
             const response = await fetch(`http://localhost:3000/api/v1/users/updateProfile/${_id}`, {
                 method: 'PUT',
                 headers: {
@@ -45,13 +80,13 @@ const UpdateProfile = () => {
                 },
                 body: JSON.stringify(payload),
             });
-
-            if (!response.ok) {
+            const data = await response.json();
+            if (response.ok) {
+                alert("Profile Updated Successfully!")
+                console.log('Update successful:', data);
+            } else {
                 throw new Error(`Error: ${response.statusText}`);
             }
-
-            const data = await response.json();
-            console.log('Update successful:', data);
         } catch (err) {
             console.error('Error updating user data:', err);
         }
@@ -75,7 +110,7 @@ const UpdateProfile = () => {
                             <label className="label">
                                 <span className="label-text">Profile Image</span>
                             </label>
-                            <input type="file" name='profileImage' placeholder="Profile Image" defaultValue={userData.profileImage} className="input input-bordered py-2" />
+                            <input type="file" name='profileImage' placeholder="Profile Image" className="input input-bordered py-2" />
                         </div>
                         <div className="form-control">
                             <label className="label">

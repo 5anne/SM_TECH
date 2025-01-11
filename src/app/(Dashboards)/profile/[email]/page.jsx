@@ -26,11 +26,11 @@ const Profile = ({ params }) => {
     }, [params]);
 
     if (loading) {
-        return <p className="text-center">Loading...</p>;
+        return <div className='pt-44'><p className="text-center text-red-700 text-2xl">Loading...</p></div>;
     }
 
     if (!userData) {
-        return <p className="text-center">User not found</p>;
+        return <div className='pt-44'><p className="text-center text-red-700 text-2xl">User not found!</p></div>;
     }
 
     return (
@@ -39,7 +39,7 @@ const Profile = ({ params }) => {
             <div className='bg-slate-100 mx-20'>
                 <div className='flex justify-center items-center gap-10 pt-8'>
                     <div className='w-1/2 flex justify-end items-center'>
-                        <Image width={100} height={100} alt={userData.userName} src={userData.profileImage} />
+                        <Image width={200} height={200} alt={userData.userName} src={userData.profileImage} />
                     </div>
                     <div className="p-6 w-1/2">
                         <ul className="list-none">
