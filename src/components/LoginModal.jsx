@@ -16,6 +16,7 @@ const LoginModal = ({ toggleModal }) => {
             console.log(formData);
 
             const response = await doCredentialsLogIn(formData);
+            console.log(response);
             if (response.error) {
                 setError(response.error.message);
             } else {

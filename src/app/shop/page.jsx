@@ -1,6 +1,4 @@
 "use client"
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Box, MenuItem, Pagination, Stack, TextField } from '@mui/material';
@@ -13,11 +11,20 @@ const Shop = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('https://fresh-harvests-beta.vercel.app/api');
+                const response = await fetch(`/api/v1/category`,
+                    {
+                        // credentials: "include",
+                        method: "GET",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
                 const data = await response.json();
-
-                setProducts(data);
-                setDisplayProducts(data);
+                if (data?.success) {
+                    setProducts(data?.data);
+                    setDisplayProducts(data?.data);
+                }
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -56,7 +63,6 @@ const Shop = () => {
 
     return (
         <>
-            <Navbar></Navbar>
             <div className='pt-28 mb-10 flex justify-center'>
                 <Box width={300}>
                     <TextField
@@ -83,7 +89,7 @@ const Shop = () => {
                             <p className='text-center text-[#4A4A52]'>${product?.price}/kg</p>
                             <div className='flex justify-between items-center gap-4'>
                                 <button className='border-2 rounded-lg px-2 py-2 text-sm lg:text-base hover:border-none hover:bg-[#FF6A1A] hover:text-white'>Add to cart</button>
-                                <Link href={`/shop/${product.id}`}><button className='border-2 rounded-lg px-2 py-2 text-sm lg:text-base hover:border-none hover:bg-[#FF6A1A] hover:text-white'>View Details</button></Link>
+                                <Link href={`/shop/${product._id}`}><button className='border-2 rounded-lg px-2 py-2 text-sm lg:text-base hover:border-none hover:bg-[#FF6A1A] hover:text-white'>View Details</button></Link>
                             </div>
                         </div>
                     ))
@@ -94,7 +100,6 @@ const Shop = () => {
                     <Pagination count={10} color="primary" />
                 </Stack>
             </div>
-            <Footer></Footer>
         </>
     );
 };

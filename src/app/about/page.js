@@ -5,13 +5,10 @@ import leaf from "../../images/leaf2.jpg";
 import mushroom from "../../images/mushroom.png";
 import logo2 from "../../images/logo2.jpg";
 import pattern from "../../images/pattern.jpg";
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 const about = () => {
     return (
         <>
-            <Navbar></Navbar>
             <div className='lg:flex items-center gap-8 relative pt-32'>
                 <div className='relative'>
                     <Image width={600} height={600} alt='Fresh Mushroom' src={aboutImage} className=''></Image>
@@ -36,7 +33,6 @@ const about = () => {
                     <button className='border-2 border-[#FF6A1A] rounded-lg text-[#FF6A1A] font-bold px-4 py-2 mt-3 hover:bg-[#FF6A1A80] hover:text-white'>Read More</button>
                 </div>
             </div>
-            <Footer></Footer>
         </>
     );
 };

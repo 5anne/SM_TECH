@@ -29,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const user = await userCollection.findOne(query);
                     if (user) {
                         const isMatch = await bcrypt.compare(credentials?.password, user?.password);
-                        console.log(isMatch)
+                        // console.log(isMatch)
                         if (isMatch) {
 
                             const token = process.env.JWT_SECRET;
@@ -37,10 +37,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                             const resp = {
                                 success: true,
                                 message: "User logged in successfully",
-                                data: user,
+                                user: user,
                                 token: token,
                             };
-                            console.log(resp);
+                            // console.log(resp);
                             return resp;
                         } else {
                             throw new Error("Check Your Password");
@@ -79,19 +79,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ],
     callbacks: {
         async jwt({ token, user }) {
+            // console.log("jwt user",user);
             if (user) {
-                token.id = user.id;
-                token.email = user.email;
-                token.role = user.role;
-                token.token = process.env.JWT_SECRET;
+                token.id = user.user.id;
+                token.email = user.user.email;
+                token.name = user.user.fullName;
+                token.token = user.token;
             }
             return token;
         },
         async session({ session, token }) {
-            // console.log(session);
+            // console.log("from session--------",session);
             session.user.id = token.id;
             session.user.email = token.email;
-            session.user.role = token.role;
+            session.user.name = token.name;
             session.user.token = token.token;
             return session;
         },

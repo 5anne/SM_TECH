@@ -1,5 +1,3 @@
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 import React from 'react';
 import Image from 'next/image';
 import { Rating } from '@mui/material';
@@ -17,7 +15,6 @@ import SectionTitle from '@/components/SectionTitle';
 const blog = () => {
     return (
         <>
-            <Navbar></Navbar>
             <div className='pt-28 lg:pt-36 px-4 lg:px-20'>
                 <div className='lg:flex justify-between gap-8'>
                     <Carousel className="border-2 rounded-lg lg:px-20 lg:w-1/2">
@@ -79,7 +76,6 @@ const blog = () => {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
         </>
     );
 };

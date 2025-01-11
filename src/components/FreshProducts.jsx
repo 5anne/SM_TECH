@@ -12,11 +12,18 @@ const FreshProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api');
+                const response = await fetch(`/api/v1/category`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+                );
                 const data = await response.json();
-
-                setProducts(data);
-                setDisplayProducts(data);
+                if (data?.success) {
+                    setProducts(data?.data);
+                    setDisplayProducts(data?.data);
+                }
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
