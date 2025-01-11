@@ -13,7 +13,7 @@ const Profile = ({ params }) => {
         const fetchUserData = async () => {
             try {
                 const { email } = await params;
-                const response = await fetch(`http://localhost:3000/api/v1/users/${decodeURIComponent(email)}`);
+                const response = await fetch(`https://fresh-harvests-beta.vercel.app/api/v1/users/${decodeURIComponent(email)}`);
                 const data = await response.json();
                 setUserData(data?.data);
             } catch (error) {

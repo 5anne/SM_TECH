@@ -16,7 +16,7 @@ const UpdateProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/v1/users/updateProfile/${_id}`);
+                const response = await fetch(`https://fresh-harvests-beta.vercel.app/api/v1/users/updateProfile/${_id}`);
                 const data = await response.json();
                 console.log(data);
                 setUserData(data?.data);
@@ -73,7 +73,7 @@ const UpdateProfile = () => {
                 }
             }
             console.log(payload);
-            const response = await fetch(`http://localhost:3000/api/v1/users/updateProfile/${_id}`, {
+            const response = await fetch(`https://fresh-harvests-beta.vercel.app/api/v1/users/updateProfile/${_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
