@@ -17,8 +17,12 @@ export const POST = async (request) => {
 
     const newUser = {
         fullName,
+        email,
         password: hassedPassword,
-        email
+        profileImage: null,
+        role: 'User',
+        createdAt: new Date(),
+        updatedAt: new Date()
     }
 
     // Update the DB  

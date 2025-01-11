@@ -17,7 +17,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: {},
             },
             authorize: async (credentials) => {
-                console.log(credentials.email);
                 if (!credentials) {
                     console.error("No credentials provided");
                     throw new Error("No credentials provided");
@@ -27,20 +26,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const userCollection = db.collection("users");
                     const query = { email: credentials?.email };
                     const user = await userCollection.findOne(query);
+
                     if (user) {
                         const isMatch = await bcrypt.compare(credentials?.password, user?.password);
-                        // console.log(isMatch)
                         if (isMatch) {
-
                             const token = process.env.JWT_SECRET;
-                            console.log(token);
                             const resp = {
                                 success: true,
                                 message: "User logged in successfully",
                                 user: user,
-                                token: token,
+                                data: { token: token },
                             };
-                            // console.log(resp);
                             return resp;
                         } else {
                             throw new Error("Check Your Password");
@@ -79,20 +75,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ],
     callbacks: {
         async jwt({ token, user }) {
-            // console.log("jwt user",user);
             if (user) {
-                token.id = user.user.id;
-                token.email = user.user.email;
+                token._id = user.user._id;
                 token.name = user.user.fullName;
-                token.token = user.token;
+                token.email = user.user.email;
+                token.token = user.data.token;
             }
             return token;
         },
         async session({ session, token }) {
-            // console.log("from session--------",session);
-            session.user.id = token.id;
-            session.user.email = token.email;
+            session.user._id = token._id;
             session.user.name = token.name;
+            session.user.email = token.email;
             session.user.token = token.token;
             return session;
         },
