@@ -2,6 +2,7 @@ import connectDB from "@/lib/connectDB";
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 
+// GET Method - GET Product Data
 export const GET = async (request) => {
     const { pathname } = new URL(request.url);
     const _id = pathname.split('/').pop();
@@ -32,7 +33,6 @@ export const GET = async (request) => {
 export const PUT = async (request) => {
     const { pathname } = new URL(request.url);
     const _id = pathname.split('/').pop();
-    console.log("Requested Path:", _id);
 
     if (!_id) {
         return NextResponse.json({ success: false, message: "No ID provided" }, { status: 400 });
@@ -57,3 +57,31 @@ export const PUT = async (request) => {
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     }
 };
+
+//DELETE Method: Product deleted here
+export const DELETE = async (request) => {
+    try {
+        const { pathname } = new URL(request.url);
+        const _id = pathname.split('/').pop();
+
+        if (!_id) {
+            return NextResponse.json({ message: "Product ID is required" }, { status: 400 });
+        }
+
+        const db = await connectDB();
+        const productCollection = db.collection("products");
+
+        const result = await productCollection.deleteOne({ _id: new ObjectId(_id) });
+
+        if (result.deletedCount === 1) {
+            return NextResponse.json({ message: "Product deleted successfully!" }, { status: 200 });
+        } else {
+            return NextResponse.json({ message: "Product not found" }, { status: 404 });
+        }
+
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        return NextResponse.json({ message: "Failed to delete product", error: error.message }, { status: 500 });
+    }
+}
+

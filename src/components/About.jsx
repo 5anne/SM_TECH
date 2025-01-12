@@ -5,6 +5,7 @@ import leaf from "../images/leaf2.jpg";
 import mushroom from "../images/mushroom.png";
 import logo2 from "../images/logo2.jpg";
 import pattern from "../images/pattern.jpg";
+import Link from 'next/link';
 
 const About = () => {
     return (
@@ -29,7 +30,7 @@ const About = () => {
                 <button className='text-[#749B3F] font-semibold bg-[#749B3F1A] px-4 py-1 rounded-2xl'>About us</button>
                 <h1 className='text-[#212337] text-2xl lg:text-4xl font-bold my-3'>About Fresh Harvest</h1>
                 <p className='text-[#4A4A52] max-w-xl mx-auto'>Welcome to Fresh Harvest, your premier destination for high-quality and fresh produce. We are passionate about providing you with the finest fruits, vegetables, and salad ingredients to nourish your body and delight your taste buds. With a commitment to excellence, sustainability, and customer satisfaction, Fresh Harvest is here to revolutionize your grocery shopping experience.</p>
-                <button className='border-2 border-[#FF6A1A] rounded-lg text-[#FF6A1A] font-bold px-4 py-2 mt-3 hover:bg-[#FF6A1A80] hover:text-white'>Read More</button>
+                <Link href="/about"><button className='border-2 border-[#FF6A1A] rounded-lg text-[#FF6A1A] font-bold px-4 py-2 mt-3 hover:bg-[#FF6A1A80] hover:text-white'>Read More</button></Link>
             </div>
         </div>
     );

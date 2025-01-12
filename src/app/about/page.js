@@ -25,7 +25,7 @@ const about = () => {
                         </div>
                     </div>
                 </div>
-                <div className='px-4 lg:px-0 mt-14 lg:mt-0'>
+                <div className='px-4 md:px-8 lg:px-0 mt-14 lg:mt-0'>
                     <Image width={120} height={100} alt='Fresh Mushroom' src={leaf} className='hidden absolute top-[5%] left-[70%] lg:left-[35%] w-16 lg:w-32 h-16 lg:h-28'></Image>
                     <button className='text-[#749B3F] font-semibold bg-[#749B3F1A] px-4 py-1 rounded-2xl'>About us</button>
                     <h1 className='text-[#212337] text-2xl lg:text-4xl font-bold my-3'>About Fresh Harvest</h1>

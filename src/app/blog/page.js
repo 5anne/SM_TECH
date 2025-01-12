@@ -15,17 +15,17 @@ import SectionTitle from '@/components/SectionTitle';
 const blog = () => {
     return (
         <>
-            <div className='pt-28 lg:pt-36 px-4 lg:px-20'>
+            <div className='pt-28 lg:pt-36 px-4 md:px-10 lg:px-20'>
                 <div className='lg:flex justify-between gap-8'>
                     <Carousel className="border-2 rounded-lg lg:px-20 lg:w-1/2">
                         <CarouselContent>
-                            <CarouselItem>
+                            <CarouselItem className="flex justify-center">
                                 <Image width={500} height={300} alt="Mushroom" src="https://i.ibb.co.com/tHHPKSh/mushroom.png" ></Image>
                             </CarouselItem>
-                            <CarouselItem>
+                            <CarouselItem className="flex justify-center">
                                 <Image width={500} height={300} alt="Mushroom" src="https://i.ibb.co.com/bJX4JNT/16-2.jpg" ></Image>
                             </CarouselItem>
-                            <CarouselItem>
+                            <CarouselItem className="flex justify-center">
                                 <Image width={500} height={300} alt="Mushroom" src="https://i.ibb.co.com/WtMWzDf/16-4.jpg" ></Image>
                             </CarouselItem>
                         </CarouselContent>

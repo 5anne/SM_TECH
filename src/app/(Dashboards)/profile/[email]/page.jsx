@@ -8,12 +8,13 @@ import { FaEdit } from 'react-icons/fa';
 const Profile = ({ params }) => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const isAdmin = userData?.role;
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const { email } = await params;
-                const response = await fetch(`https://fresh-harvests-beta.vercel.app/api/v1/users/${decodeURIComponent(email)}`);
+                const response = await fetch(`https://fresh-harvests-6kzq.vercel.app/api/v1/users/${decodeURIComponent(email)}`);
                 const data = await response.json();
                 setUserData(data?.data);
             } catch (error) {
@@ -37,15 +38,17 @@ const Profile = ({ params }) => {
     return (
         <>
             <div className='flex'>
-                <Sidebar userData={userData} />
+                {
+                    isAdmin === 'Admin' && <Sidebar userData={userData} />
+                }
                 <div className="container mx-auto pt-32 px-4">
-                    <h2 className="text-2xl text-center font-bold mb-8 border-b-2 border-green-700 pb-4 w-1/5 mx-auto">User Profile</h2>
-                    <div className='bg-slate-100 mx-20'>
-                        <div className='flex justify-center items-center gap-10 pt-8'>
-                            <div className='w-1/2 flex justify-end items-center'>
-                                <Image width={200} height={200} alt={userData.userName} src={userData.profileImage} />
+                    <h2 className="text-2xl text-center font-bold mb-8 border-b-2 border-green-700 pb-4 w-1/2 md:w-1/5 mx-auto uppercase">User Profile</h2>
+                    <div className='bg-slate-100 md:mx-10 lg:mx-20'>
+                        <div className='md:flex justify-center items-center md:gap-4 lg:gap-10 pt-8'>
+                            <div className='md:w-1/2 flex justify-center md:justify-end items-center'>
+                                <Image width={200} height={200} alt={userData?.userName} src={userData.profileImage} />
                             </div>
-                            <div className="p-6 w-1/2">
+                            <div className="p-6 md:w-1/2">
                                 <ul className="list-none">
                                     <li className="flex items-center mb-2">
                                         <span className="font-semibold">User Name:</span>

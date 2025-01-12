@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import SectionTitle from './SectionTitle';
 import Image from 'next/image';
 import leaf2 from "../images/leaf2.jpg";
+import Link from 'next/link';
 
 const FreshProducts = () => {
 
@@ -12,13 +13,7 @@ const FreshProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(`/api/v1/category`, {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-                );
+                const response = await fetch(`/api/v1/category`);
                 const data = await response.json();
                 if (data?.success) {
                     setProducts(data?.data);
@@ -90,7 +85,7 @@ const FreshProducts = () => {
                 }
             </div>
             <div className='flex justify-center items-center mt-8'>
-                <button className='border-2 border-[#FF6A1A] rounded-lg text-[#FF6A1A] font-bold px-4 py-2 hover:bg-[#FF6A1A80] hover:text-white'>See All Products</button>
+                <Link href="/shop"><button className='border-2 border-[#FF6A1A] rounded-lg text-[#FF6A1A] font-bold px-4 py-2 hover:bg-[#FF6A1A80] hover:text-white'>See All Products</button></Link>
             </div>
         </div>
     );

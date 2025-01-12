@@ -72,7 +72,7 @@ const Navbar = ({ session }) => {
 
                 {
                     session?.user ?
-                        <div className='flex items-center gap-4'>
+                        <div className='hidden md:flex items-center gap-4'>
                             {session?.user?.image ?
                                 <Image height={35} width={35} alt={session?.user?.name} src={session?.user?.image} className='rounded-full' />
                                 :
@@ -81,14 +81,14 @@ const Navbar = ({ session }) => {
                             <LogOut />
                         </div>
                         :
-                        <button className='border-[1px] rounded-lg px-4 py-2 hover:bg-[#FF6A1A]' onClick={() => document.getElementById('my_modal_3').showModal()}>Sign In</button>
+                        <button className='hidden md:flex border-[1px] rounded-lg px-4 py-2 hover:bg-[#FF6A1A]' onClick={() => document.getElementById('my_modal_3').showModal()}>Sign In</button>
                 }
                 {
                     isLoginModalOpen ?
                         <LoginModal toggleModal={() => setIsLoginModalOpen(false)} /> : <RegisterModal toggleModal={() => setIsLoginModalOpen(true)} />
                 }
             </div>
-            <Link href={`/profile/${email}`} className="tooltip tooltip-bottom text-3xl" data-tip="Dashboard"><MdDashboard /></Link>
+            <Link href={`/profile/${email}`} className="tooltip tooltip-bottom text-3xl ml-2" data-tip="Dashboard"><MdDashboard /></Link>
             <div className='dropdown dropdown-end lg:hidden'>
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                     <svg
@@ -106,7 +106,7 @@ const Navbar = ({ session }) => {
                 </div>
                 <ul
                     tabIndex={0}
-                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-28 p-2 shadow">
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-44 p-2 shadow">
                     <li className='flex '>
                         <Link
                             rel='noopener noreferrer'
@@ -145,7 +145,7 @@ const Navbar = ({ session }) => {
                     </li>
                     {
                         session?.user ?
-                            <div className='flex items-center gap-4'>
+                            <div className='flex items-center gap-4 md:hidden my-4'>
                                 {session?.user?.image ?
                                     <Image height={35} width={35} alt={session?.user?.name} src={session?.user?.image} className='rounded-full' /> :
                                     <Image height={35} width={35} alt="User" src={userImg} className='rounded-full' />
@@ -153,7 +153,7 @@ const Navbar = ({ session }) => {
                                 <LogOut />
                             </div>
                             :
-                            <button className='border-[1px] rounded-lg px-4 py-2 hover:bg-[#FF6A1A]' onClick={() => document.getElementById('my_modal_3').showModal()}>Sign In</button>
+                            <button className='border-[1px] rounded-lg my-4 px-4 py-2 hover:bg-[#FF6A1A] md:hidden' onClick={() => document.getElementById('my_modal_3').showModal()}>Sign In</button>
                     }
                     {
                         isLoginModalOpen ?

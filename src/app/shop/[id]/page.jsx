@@ -7,6 +7,21 @@ import { FaHeart } from 'react-icons/fa';
 import { RiShoppingCartFill } from 'react-icons/ri';
 import { useParams } from 'next/navigation';
 
+// export const generateMetadata = async ({ params }) => {
+//     const id = await params;
+//     const _id = id?._id;
+//     console.log(_id);
+//     const res = await fetch(`/api/v1/category/${_id}`);
+//     const productsData = await res.json();
+//     return {
+//         title: {
+//             absolute: `${productsData.productName}`
+//         },
+//         description: productsData.description,
+//         keywords: productsData.description.split(' ')
+//     }
+// }
+
 const Page = () => {
     const id = useParams();
     const _id = id?.id;
@@ -15,13 +30,7 @@ const Page = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(`/api/v1/category/${_id}`, {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-                );
+                const response = await fetch(`/api/v1/category/${_id}`);
                 const data = await response.json();
                 if (data?.success) {
                     setProduct(data?.data);
@@ -35,8 +44,10 @@ const Page = () => {
 
     return (
         <>
-            <div className='lg:flex justify-between gap-8 pt-36 px-4 lg:px-20'>
-                <Image width={300} height={300} alt="Fruits" src={product?.image} className='lg:w-1/2 lg:h-[400px] border-2 rounded-lg lg:px-20'></Image>
+            <div className='lg:flex justify-between gap-8 pt-36 px-4 md:px-10 lg:px-20'>
+                <div className='flex justify-center'>
+                    <Image width={300} height={300} alt="Fruits" src={product?.image} className='lg:w-full lg:h-[400px] border-2 rounded-lg lg:px-20'></Image>
+                </div>
                 <div className='lg:w-1/2 mt-8 lg:mt-0'>
                     <button className='text-[#749B3F] font-semibold bg-[#749B3F1A] px-4 py-1 rounded-2xl'>Fruits</button>
                     <h1 className='text-[#212337] text-2xl lg:text-4xl font-bold my-3'>{product?.productName}</h1>

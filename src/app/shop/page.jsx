@@ -11,15 +11,7 @@ const Shop = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(`/api/v1/category`,
-                    {
-                        // credentials: "include",
-                        method: "GET",
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                );
+                const response = await fetch(`/api/v1/category`);
                 const data = await response.json();
                 if (data?.success) {
                     setProducts(data?.data);
@@ -78,7 +70,7 @@ const Shop = () => {
                     </TextField>
                 </Box>
             </div>
-            <div className='grid grid-cols-1 lg:grid-cols-4 gap-8 px-4 lg:px-14 '>
+            <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 lg:px-14 '>
                 {
                     displayProducts?.map((product, index) => (
                         <div key={index} className='shadow-xl rounded-lg space-y-1 p-4'>

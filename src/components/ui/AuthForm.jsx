@@ -1,7 +1,7 @@
 import { doSocialLogin } from '@/app/actions';
 import Image from 'next/image';
 import google from "../../images/google.jpg";
-import facebook from "../../images/facebook.jpg"
+import { FaGithub } from 'react-icons/fa';
 
 const AuthForm = () => {
 
@@ -24,8 +24,8 @@ const AuthForm = () => {
                     name='action'
                     value='github'
                 >
-                    <Image width={20} height={20} alt='Facebook' src={facebook} />
-                    Facebook
+                    <span className='text-lg'><FaGithub /></span>
+                    GitHub
                 </button>
             </form>
         </div>

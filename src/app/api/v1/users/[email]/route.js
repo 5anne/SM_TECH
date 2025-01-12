@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
     const { pathname } = new URL(request.url);
     const email = decodeURIComponent(pathname.split('/').pop());
-    console.log("Requested Path:", pathname, "Email:", email);
 
     if (!email) {
         return NextResponse.json({ success: false, message: "No email provided" }, { status: 400 });

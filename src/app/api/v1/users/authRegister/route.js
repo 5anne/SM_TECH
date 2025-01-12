@@ -1,24 +1,19 @@
 
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
 import connectDB from "@/lib/connectDB";
 
 
 export const POST = async (request) => {
 
-    const { fullName, email, password } = await request.json();
-
-    // Encrypted the Password 
-
-    const hassedPassword = await bcrypt.hash(password, 5);
+    const { name, email, image } = await request.json();
 
     // Formed a DB Payload 
 
     const newUser = {
-        fullName,
+        fullName: name,
         email,
-        password: hassedPassword,
-        profileImage: null,
+        password: null,
+        profileImage: image,
         role: 'User',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -37,7 +32,7 @@ export const POST = async (request) => {
         }
         const result = await userCollection.insertOne(newUser);
 
-        return NextResponse.json({ message: "User registered successfully!", result }, { status: 200 })
+        return NextResponse.json({ success: true, message: "User registered successfully!", result }, { status: 200 })
     } catch (error) {
         return new NextResponse(error.message, {
             status: 500

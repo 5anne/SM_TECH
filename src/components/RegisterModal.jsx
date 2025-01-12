@@ -12,7 +12,6 @@ const RegisterModal = ({ toggleModal }) => {
             const fullName = formData.get('userName');
             const email = formData.get('userEmail');
             const password = formData.get('password');
-            console.log(fullName, email, password);
 
             const response = await fetch(`/api/v1/users/register`, {
                 method: 'POST',
@@ -21,14 +20,14 @@ const RegisterModal = ({ toggleModal }) => {
                 },
                 body: JSON.stringify({ fullName, email, password }),
             });
-            console.log(response);
             if (response.ok) {
-                alert("User registered successfully! Please, Log In!")
+                alert("User registered successfully! Please, Log In!");
+                console.log("User registered successfully!", response)
             } else {
                 console.error("Error occurred!")
             }
         } catch (err) {
-            console.error(err);
+            console.error("Error occurred!", err.message);
         }
     };
 

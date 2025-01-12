@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import bcrypt from "bcryptjs";
 import axios from 'axios';
 
-// const image_hosting_key = process.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = 'https://api.imgbb.com/1/upload?key=515cbf2e7466e1421466864e5e87bbbe';
 
 const UpdateProfile = () => {
@@ -16,7 +15,7 @@ const UpdateProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`https://fresh-harvests-beta.vercel.app/api/v1/users/updateProfile/${_id}`);
+                const response = await fetch(`https://fresh-harvests-6kzq.vercel.app/api/v1/users/updateProfile/${_id}`);
                 const data = await response.json();
                 console.log(data);
                 setUserData(data?.data);
@@ -37,13 +36,14 @@ const UpdateProfile = () => {
             const formData = new FormData(e.currentTarget);
             const payload = {};
 
+            //Image hosted
+
             const profileImageFile = { image: e.currentTarget.profileImage.files[0] };
 
             if (!profileImageFile) {
                 console.error('No file selected');
                 return;
             }
-            console.log(profileImageFile);
 
             const result = await axios.post(image_hosting_api, profileImageFile, {
                 headers: {
@@ -51,14 +51,13 @@ const UpdateProfile = () => {
                 }
             });
 
+            //payload updated
+
             for (let [key, value] of formData.entries()) {
                 if (value) {
                     payload[key] = value;
                     if (key === "profileImage") {
                         payload[key] = result?.data.data.url;
-                    }
-                    else {
-                        payload.profileImage = result?.data.data.url;
                     }
                     if (key === "password") {
                         const hassedPassword = await bcrypt.hash(payload[key], 5);
@@ -67,13 +66,13 @@ const UpdateProfile = () => {
                     if (key === "updatedAt") {
                         payload[key] = new Date();
                     }
-                    else {
-                        payload.updatedAt = new Date();
-                    }
                 }
             }
             console.log(payload);
-            const response = await fetch(`https://fresh-harvests-beta.vercel.app/api/v1/users/updateProfile/${_id}`, {
+
+            //profile updated
+
+            const response = await fetch(`https://fresh-harvests-6kzq.vercel.app/api/v1/users/updateProfile/${_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,12 +82,13 @@ const UpdateProfile = () => {
             const data = await response.json();
             if (response.ok) {
                 alert("Profile Updated Successfully!")
-                console.log('Update successful:', data);
+                console.log('Update successful:', response);
+                window.location.reload();
             } else {
                 throw new Error(`Error: ${response.statusText}`);
             }
         } catch (err) {
-            console.error('Error updating user data:', err);
+            console.error('Error updating user data:', err.message);
         }
     }
 
@@ -101,16 +101,16 @@ const UpdateProfile = () => {
     }
 
     return (
-        <div className='pt-32 px-36'>
+        <div className='pt-32 lg:px-36'>
             <form onSubmit={handleSubmit} className="card-body">
-                <h2 className="text-2xl text-center font-bold mb-8 border-b-2 border-green-700 pb-4 w-1/5 mx-auto">Update Profile</h2>
-                <div className='flex justify-center items-center gap-8'>
+                <h2 className="text-2xl text-center font-bold mb-8 border-b-2 border-green-700 pb-4 w-2/3 md:w-2/5 lg:w-1/5 mx-auto uppercase">Update Profile</h2>
+                <div className='md:flex justify-center items-center gap-8'>
                     <div className='flex-1'>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Profile Image</span>
                             </label>
-                            <input type="file" name='profileImage' placeholder="Profile Image" className="input input-bordered py-2" required/>
+                            <input type="file" name='profileImage' placeholder="Profile Image" className="input input-bordered py-2" required />
                         </div>
                         <div className="form-control">
                             <label className="label">

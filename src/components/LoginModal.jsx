@@ -15,15 +15,15 @@ const LoginModal = ({ toggleModal }) => {
             }
 
             const response = await doCredentialsLogIn(formData);
-            console.log("Login Modal", response);
             if (response.error) {
+                console.log("Error occurred!")
                 setError(response.error.message);
             } else {
                 alert("User logged in successfully!")
                 window.location.reload();
             }
         } catch (err) {
-            console.error(err.message);
+            console.error("Error occurred!", err.message);
             setError(err.message);
         }
     }
