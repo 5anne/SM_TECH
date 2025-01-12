@@ -2,6 +2,10 @@
 
 Fresh Harvests is a modern web application built using Next.js. This project aims to provide a seamless user experience for managing and purchasing fresh produce online.
 
+## Live Link
+
+https://fresh-harvests-6kzq.vercel.app/
+
 ## Project Setup
 
 ### Prerequisites
