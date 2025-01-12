@@ -93,7 +93,7 @@ const AllProducts = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                {product.productName}
+                                                <span>{product.productName}</span>
                                                 <br />
                                                 <span className="badge badge-ghost badge-sm hidden lg:flex">{product.description}</span>
                                             </td>
