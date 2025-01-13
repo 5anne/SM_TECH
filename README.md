@@ -6,6 +6,10 @@ Fresh Harvests is a modern web application built using Next.js. This project aim
 
 https://fresh-harvests-6kzq.vercel.app/
 
+## 
+Admin Email: john@gmail.com
+Admin Password: 123456
+
 ## Project Setup
 
 ### Prerequisites
